@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"> <!-- تحديد اللغة العربية والاتجاه من اليمين لليسار -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio - [Abdelrahman-Ahmed]</title>
+    <!-- تضمين خطوط Google Fonts: Cairo للغة العربية و Poppins للغة الإنجليزية (للمتصفحات) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- تضمين أيقونات Font Awesome لوسائل التواصل الاجتماعي -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* تعريف المتغيرات لألوان التصميم لسهولة التعديل */
+        :root {
+            --primary-color: #6a0572; /* بنفسجي غامق */
+            --secondary-color: #ab34be; /* بنفسجي فاتح */
+            --accent-color: #e0b0ff; /* بنفسجي فاتح جداً */
+            --text-color: #f0f0f0; /* لون النص الفاتح */
+            --bg-color: #1a1a2e; /* لون الخلفية الداكن جداً */
+            --card-bg: #2a2a4a; /* لون خلفية البطاقات */
+            --gradient-start: #4a148c; /* بداية التدرج */
+            --gradient-end: #880e4f; /* نهاية التدرج */
+        }
+
+        /* الأنماط الأساسية للجسم والخطوط */
+        body {
+            font-family: 'Cairo', 'Poppins', sans-serif; /* استخدام خط القاهرة للعربية و Poppins للإنجليزية */
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            overflow-x: hidden; /* منع شريط التمرير الأفقي */
+            scroll-behavior: smooth; /* تمرير سلس عند النقر على الروابط */
+        }
+
+        /* تحريك الخلفية لجعلها حيوية */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top left, var(--primary-color) 0%, transparent 40%),
+                        radial-gradient(circle at bottom right, var(--secondary-color) 0%, transparent 40%);
+            opacity: 0.15;
+            z-index: -1;
+            animation: background-move 25s infinite alternate ease-in-out;
+        }
+
+        @keyframes background-move {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(5%, 5%) scale(1.05); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        /* رأس الصفحة (Header) */
+        header {
+            background: rgba(0, 0, 0, 0.5); /* خلفية شفافة مع ضبابية */
+            padding: 1.5rem 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px); /* تأثير الضبابية */
+            animation: header-fade-in 1s ease-out;
+        }
+
+        @keyframes header-fade-in {
+            from { opacity: 0; transform: translateY(-70px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 3.5em;
+            color: var(--accent-color);
+            text-shadow: 0 0 15px var(--accent-color);
+            letter-spacing: 2px;
+            animation: text-pop-in 1.2s ease-out forwards;
+        }
+
+        @keyframes text-pop-in {
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* قائمة التنقل (Navigation) */
+        nav ul {
+            padding: 0;
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        nav ul li {
+            margin: 0 30px;
+        }
+
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.3em;
+            position: relative;
+            padding-bottom: 8px;
+            transition: all 0.4s ease-in-out;
+            font-weight: 600;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            left: 50%;
+            background-color: var(--accent-color);
+            transition: width 0.4s ease-in-out, left 0.4s ease-in-out;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent-color);
+            transform: translateY(-3px) scale(1.05);
+            text-shadow: 0 0 8px var(--accent-color);
+        }
+
+        /* الحاوية الرئيسية للمحتوى */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 50px 0;
+        }
+
+        /* الأقسام العامة (About, Skills, Portfolio, Contact) */
+        .section {
+            background: var(--card-bg);
+            padding: 50px;
+            margin-bottom: 50px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+            opacity: 0; /* للتحريك عند التمرير */
+            transform: translateY(70px) scale(0.95); /* للتحريك عند التمرير */
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* تحريك سلس */
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .section h2 {
+            font-size: 3em;
+            color: var(--accent-color);
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+            font-weight: 900;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 0;
+            border-radius: 5px;
+        }
+
+        /* قسم "عني" (About) */
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            text-align: center;
+        }
+
+        .about-content img {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 7px solid var(--accent-color);
+            box-shadow: 0 0 30px rgba(var(--accent-color), 0.7);
+            animation: profile-pulse 4s infinite ease-in-out; /* تحريك نبضي */
+        }
+
+        @keyframes profile-pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 30px rgba(var(--accent-color), 0.7); }
+            50% { transform: scale(1.03); box-shadow: 0 0 40px rgba(var(--accent-color), 0.9); }
+        }
+
+        .about-text {
+            max-width: 800px;
+            font-size: 1.2em;
+            line-height: 2;
+        }
+
+        /* قسم "مهاراتي" (Skills) */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .skill-item {
+            background: var(--bg-color);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .skill-item i {
+            font-size: 3em;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .skill-item h3 {
+            font-size: 1.4em;
+            color: var(--text-color);
+            margin: 0;
+        }
+
+        /* قسم "أعمالي" (Portfolio) */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 35px;
+            margin-top: 30px;
+        }
+
+        .portfolio-item {
+            background: var(--bg-color);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .portfolio-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, var(--primary-color), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 1;
+        }
+
+        .portfolio-item:hover::before {
+            opacity: 0.8;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.7);
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.15);
+        }
+
+        .portfolio-info {
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            z-index: 2; /* لضمان ظهور النص فوق التدرج */
+        }
+
+        .portfolio-info h3 {
+            font-size: 2em;
+            color: var(--accent-color);
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .portfolio-info p {
+            font-size: 1em;
+            color: var(--text-color);
+        }
+
+        /* قسم "تواصل معي" (Contact) */
+        .contact-info {
+            text-align: center;
+            font-size: 1.2em;
+        }
+
+        .contact-info p {
+            margin-bottom: 20px;
+        }
+
+        .contact-info a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-info a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        .social-links {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        .social-links a {
+            color: var(--text-color);
+            font-size: 2.5em;
+            transition: transform 0.3s ease, color 0.3s ease;
+            text-decoration: none; /* إزالة خط تحت الروابط */
+        }
+
+        .social-links a:hover {
+            transform: translateY(-5px) scale(1.1);
+        }
+
+        /* ألوان أيقونات التواصل الاجتماعي عند التمرير */
+        .social-links a.fa-facebook:hover { color: #3b5998; }
+        .social-links a.fa-twitter:hover { color: #00acee; }
+        .social-links a.fa-linkedin:hover { color: #0e76a8; }
+        .social-links a.fa-github:hover { color: #333; }
+        .social-links a.fa-instagram:hover { color: #E1306C; }
+        .social-links a.fa-behance:hover { color: #053eff; }
+
+        /* تذييل الصفحة (Footer) */
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-size: 1em;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.4);
+            position: relative;
+        }
+
+        /* تحسينات للجوال (Responsive Design) */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.8em;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            nav ul li {
+                margin: 0;
+            }
+
+            nav ul li a {
+                font-size: 1.1em;
+                padding: 5px 0;
+            }
+
+            .container {
+                width: 95%;
+                padding: 30px 0;
+            }
+
+            .section {
+                padding: 30px;
+                margin-bottom: 30px;
+            }
+
+            .section h2 {
+                font-size: 2.5em;
+                margin-bottom: 20px;
+            }
+
+            .about-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .about-content img {
+                width: 180px;
+                height: 180px;
+            }
+
+            .about-text {
+                font-size: 1em;
+            }
+
+            .skills-grid, .portfolio-grid {
+                grid-template-columns: 1fr; /* عمود واحد على الجوال */
+            }
+
+            .portfolio-item img {
+                height: 180px;
+            }
+
+            .portfolio-info h3 {
+                font-size: 1.6em;
+            }
+
+            .social-links {
+                gap: 15px;
+            }
+
+            .social-links a {
+                font-size: 2em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .section h2 {
+                font-size: 2em;
+            }
+
+            .portfolio-info h3 {
+                font-size: 1.4em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My fabulous portfolio!</h1>
+        <nav>
+            <ul>
+                <li><a href="#about">About Me</a></li>
+                <li><a href="#skills">My Skills</a></li>
+                <li><a href="#portfolio">My Work</a></li>
+                <li><a href="#contact">Contact Me</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- قسم "عني" - قم بتعديل المحتوى هنا -->
+        <section id="about" class="section">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <!-- استبدل الرابط التالي بصورة ملفك الشخصي الحقيقية -->
+                <img src="https://assets.onecompiler.app/42xcc7cfq/43kq7gxen/bee9ca7b0c841d29bc1ba08dbd9bdb5f~tplv-tiktokx-cropcenter_1080_1080.jpeg" alt="صورتي الشخصية">
+                <div class="about-text">
+                    <p>Welcome to my creative world! **[ABDO]**, [Web Developer] Passionate about transforming ideas into tangible reality and creating memorable experiences. I believe in the power of design and innovation to create a positive impact.</p>
+
+<p>I specialize in [Cybersecurity Programmer,front-end development,web animation]. I have experience building end-to-end solutions, from initial concept to final implementation, with a focus on fine detail and high performance.</p>
+
+<p>Here you'll find a glimpse into my creative journey and some of my most notable projects. Enjoy!</p>
+
+</div>
+            </div>
+        </section>
+
+        <!-- قسم "مهاراتي" - قم بتعديل المحتوى هنا -->
+        <section id="skills" class="section">
+            <h2>My Skills</h2>
+            <div class="skills-grid">
+                <!-- يمكنك إضافة المزيد من المهارات هنا. استخدم أيقونات Font Awesome المناسبة. -->
+                <div class="skill-item">
+                    <i class="fab fa-html5"></i>
+                    <h3>HTML5</h3>
+                </div>
+                <div class="skill-item">
+                    <i class="fab fa-css3-alt"></i>
+                    <h3>CSS3</h3>
+                </div>
+                <div class="skill-item">
+                    <i class="fab fa-js-square"></i>
+                    <h3>JavaScript</h3>
+                </div>
+                <div class="skill-item">
+                    <i class="fab fa-python"></i>
+                    <h3>Python</h3>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-flask"></i>
+                    <h3>Flask</h3>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-palette"></i>
+                    <h3>UI/UX</h3>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-code-branch"></i>
+                    <h3>Git & GitHub</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم "أعمالي" - سيتم إضافة المشاريع ديناميكيًا بواسطة JavaScript -->
+        <section id="portfolio" class="section">
+            <h2>My Work</h2>
+            <div class="portfolio-grid" id="portfolioItems">
+                <!-- سيتم إضافة عناصر المعرض هنا بواسطة JavaScript -->
+            </div>
+        </section>
+
+        <!-- قسم "تواصل معي" - قم بتعديل المحتوى هنا -->
+        <section id="contact" class="section">
+            <h2>Contact Me</h2>
+            <div class="contact-info">
+                <p>Let's build something amazing together! I'm always available for exciting projects and new collaborations.</p>
+                <div class="social-links">
+                    <!-- استبدل # بروابط حساباتك الحقيقية -->
+                    <a href="https://www.linkedin.com/in/abdelrahman-ahmed-1959462a8" target="_blank" class="fab fa-linkedin" title="LinkedIn"></a>
+                    <a href="https://github.com/ABDO20005839" target="_blank" class="fab fa-github" title="GitHub"></a>
+                    <a href="https://x.com/Abdel1rahmaan?t=25fwI_tm5Fyv_Yf3CWZN5w&s=09" target="_blank" class="fab fa-twitter" title="Twitter"></a>
+                    <a href="https://www.instagram.com/abdel1rahman_ahmed/" target="_blank" class="fab fa-instagram" title="Instagram"></a>
+                    <!-- يمكنك إضافة المزيد من أيقونات Font Awesome هنا (مثل Behance, Dribbble, Facebook) -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>[ABDO] Built with passion and creativity.</p>
+    </footer>
+
+    <script>
+        // JavaScript الكود
+        document.addEventListener('DOMContentLoaded', function() {
+            // بيانات المشاريع - قم بتعديل هذه المصفوفة لإضافة أو تعديل مشاريعك
+            const portfolioData = [
+                {
+                    title: 'Interactive Online Storefront',
+description: 'Design and development of a modern and attractive UI for an online store with smooth animations and a great shopping experience.',
+                    image: 'https://assets.onecompiler.app/42xcc7cfq/43kq7gxen/Screenshot%20(4).png'
+                },
+                {
+                    title: 'Innovative Task Management App',
+description: 'Building a web app that allows users to organize their tasks efficiently, with stunning visual effects and an intuitive design.',
+                    image: 'https://assets.onecompiler.app/42xcc7cfq/43kq7gxen/Screenshot%20(6).png'
+                },
+                {
+                    title: 'Interactive Educational Website',
+description: 'Developing an educational platform rich in interactive content and illustrative animations, to enhance the distance learning experience.',
+                    image: 'https://assets.onecompiler.app/42xcc7cfq/43kq7gxen/Screenshot%20(7).png'
+                },
+                {
+                    title: 'Mobile App Design (UX/UI)',
+                    description: 'Mobile App UX and UI Design with a Focus on Usability and Visual Aesthetics.',
+                    image: 'https://assets.onecompiler.app/42xcc7cfq/43kq7gxen/Screenshot%20(8).png'
+                }
+                // يمكنك إضافة المزيد من المشاريع هنا! تأكد من استبدال روابط الصور.
+            ];
+
+            const portfolioGrid = document.getElementById('portfolioItems');
+
+            // إنشاء عناصر المعرض ديناميكيًا من مصفوفة البيانات
+            portfolioData.forEach(item => {
+                const portfolioItemDiv = document.createElement('div');
+                portfolioItemDiv.classList.add('portfolio-item');
+
+                const img = document.createElement('img');
+                img.src = item.image;
+                img.alt = item.title;
+
+                const portfolioInfoDiv = document.createElement('div');
+                portfolioInfoDiv.classList.add('portfolio-info');
+
+                const h3 = document.createElement('h3');
+                h3.textContent = item.title;
+
+                const p = document.createElement('p');
+                p.textContent = item.description;
+
+                portfolioInfoDiv.appendChild(h3);
+                portfolioInfoDiv.appendChild(p);
+
+                portfolioItemDiv.appendChild(img);
+                portfolioItemDiv.appendChild(portfolioInfoDiv);
+
+                portfolioGrid.appendChild(portfolioItemDiv);
+            });
+
+            // تحريكات ظهور الأقسام عند التمرير (Intersection Observer)
+            const sections = document.querySelectorAll('.section');
+
+            const observerOptions = {
+                root: null, // المراقبة بالنسبة لإطار العرض (viewport)
+                rootMargin: '0px',
+                threshold: 0.1 // العنصر يصبح مرئياً بنسبة 10% على الأقل
+            };
+
+            const sectionObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); // إيقاف المراقبة بعد أن يصبح العنصر مرئياً مرة واحدة
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                sectionObserver.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
